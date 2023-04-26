@@ -10,7 +10,7 @@ namespace PhysicsEngine.Shapes
 {
     internal class Triangle : Shape
     {
-        public Triangle(Vector2 position, float size) : base(CreateVertices(position, size))
+        public Triangle(Vector2 position, float size, Vector2 initVel) : base(CreateVertices(position, size), new uint[] { 0, 1, 2 }, initVel)
         { }
 
         private static float[] CreateVertices(Vector2 position, float size)

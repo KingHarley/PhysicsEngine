@@ -14,7 +14,7 @@ namespace PhysicsEngine
     internal class Window : GameWindow
     {
         private Shader Shader = null!;
-        private List<Triangle> Triangles = new List<Triangle>();
+        private List<Shape> Shapes = new List<Shape>();
         public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
         {
             Shader = new Shader("shader.vert", "shader.frag");
@@ -31,8 +31,7 @@ namespace PhysicsEngine
         {
             base.OnLoad();
             GL.ClearColor(Color4.Black);
-            Triangles.Add(new Triangle(new System.Numerics.Vector2(0.0f, 0.0f), 0.25f));
-            Triangles.Add(new Triangle(new System.Numerics.Vector2(0.2f, 0.2f), 0.1f));
+            Shapes.Add(new Square(new System.Numerics.Vector2(0.3f, -0.3f), 0.3f, new System.Numerics.Vector2(0.0001f, 0.0001f)));
             Shader.Use();
         }
 
@@ -41,8 +40,12 @@ namespace PhysicsEngine
             base.OnRenderFrame(args);
             GL.Clear(ClearBufferMask.ColorBufferBit);
             Shader.Use();
-            foreach (var tr in Triangles)
-                tr.Draw();
+            foreach (var s in Shapes)
+            {
+                s.UpdatePosition();
+                s.Draw();
+            }
+
 
             SwapBuffers();
         }
